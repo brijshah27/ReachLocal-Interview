@@ -1,0 +1,30 @@
+# Gradle
+**/build
+**/out
+/.gradle
+/target
+/classes
+*.class
+*.jar
+*.war
+*.orig
+
+# IDEA
+*.iml
+/.idea
+
+# Eclipse
+/.settings
+.project
+
+# Git
+.git
+
+# OSX
+.DS_Store
+
+# Application
+rl/*
+*.log
+/client/dist
+/client/node_modules

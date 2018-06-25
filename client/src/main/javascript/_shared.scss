@@ -1,0 +1,29 @@
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/variables';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/mixins';
+
+/* COLORS */
+$rl-white: #fEfEfE;
+$rl-blue: #39c;
+$rl-dark-blue: #409ccb;
+$rl-orange: #f37021;
+$rl-grey: #F4F4F4;
+$rl-dark-grey: #444;
+
+/* GLOBAL */
+$gbl-background: black;
+
+/* MAIN */
+$main-background: $rl-white;
+
+/* NAV */
+$header-background: $rl-grey;
+$header-width: 100%;
+$header-height: 10%;
+$sidebar-background: $rl-grey;
+$sidebar-width: 10%;
+$sidebar-height: 80%;
+
+/* CONTENT */
+$content-background: $rl-white;
+$content-width: 86%;
+$content-height: 80%;

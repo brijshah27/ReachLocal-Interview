@@ -1,0 +1,17 @@
+@import '../shared';
+
+.main {
+  background: $main-background;
+  &-header {
+    h1 {
+      text-align: center;
+    }
+  }
+  &-body {
+    border: 1px solid $panel-primary-border;
+    @include make-md-column(6, 0)
+  }
+  &-body-header {
+    @include clearfix;
+  }
+}

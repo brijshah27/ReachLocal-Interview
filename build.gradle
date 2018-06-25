@@ -1,0 +1,83 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+println project(':client').getProjectDir()
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'todo'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+    project {
+        vcs = 'Git'
+    }
+}
+
+configurations {
+    all*.exclude group: 'org.eclipse.persistence'
+    all*.exclude module: 'slf4j-log4j12'
+    all*.exclude group: 'org.codehaus.jackson'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile("org.codehaus.groovy:groovy-all:${groovyVersion}")
+    compile("com.h2database:h2:${h2Version}")
+
+    compile project(':client')
+
+    runtime('org.springframework.boot:spring-boot-devtools')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.spockframework:spock-core:${spockVersion}")
+    testCompile("org.spockframework:spock-spring:${spockVersion}")
+}
+
+project(':client') {
+    apply plugin: 'java' //for the Jar task
+    idea {
+        module {
+            sourceDirs += file("src/main/javascript")
+            testSourceDirs += file("src/test/javascript")
+        }
+    }
+    jar {
+        from(fileTree("dist")) {
+            into "META-INF/resources/webjars/client/1.0"
+        }
+    }
+    ext{
+        buildType = project.hasProperty("env") ? project.property("env") : "dev"
+        npmBuildArg = "build-${buildType}".toLowerCase()
+    }
+    task webpack(type:Exec){
+        executable("npm")
+        args("run", npmBuildArg)
+    }
+
+    jar.dependsOn webpack
+}
